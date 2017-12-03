@@ -5,8 +5,6 @@ import com.coldfusion.lint.highlighters.Highlighter;
 import com.coldfusion.lint.listeners.AnalyzeCodeButtonActionListener;
 import com.coldfusion.lint.listeners.EditorMouseClickListener;
 import com.coldfusion.lint.listeners.ListResultsMouseClickListener;
-import com.coldfusion.lint.model.ErrorDescription;
-import com.google.common.collect.*;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.openapi.editor.Document;
@@ -28,9 +26,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+
 
 
 public class LintAnalyzer implements ToolWindowFactory {
@@ -72,6 +68,16 @@ public class LintAnalyzer implements ToolWindowFactory {
         setEditorMouseClickListener();
     }
 
+    private void setEditorMouseClickListener() {
+        try {
+            editor.removeEditorMouseListener(editorMouseClickListener);
+        } catch (Exception e) {
+            //Implement logger here
+        }
+        editorMouseClickListener = new EditorMouseClickListener();
+        editor.addEditorMouseListener(editorMouseClickListener);
+    }
+
     public void analyzeFile() {
         setEnvironmentSettings();
         runCflint();
@@ -84,8 +90,6 @@ public class LintAnalyzer implements ToolWindowFactory {
         DefaultListModel listModelAll = new DefaultListModel();
         DefaultListModel listModelInfo = new DefaultListModel();
         DefaultListModel listModelError = new DefaultListModel();
-
-        Multimap<Integer, String> multimap = ArrayListMultimap.create();
 
         int numberOfErrorsErors = 0;
         int numberOfErrorsInfo = 0;
@@ -111,7 +115,6 @@ public class LintAnalyzer implements ToolWindowFactory {
             String output = "";
             String typeOfError;
             String expression;
-            String message;
             int line;
             int column;
             int i = 0;
@@ -120,40 +123,61 @@ public class LintAnalyzer implements ToolWindowFactory {
                 typeOfError = arr.getJSONObject(i).getString("severity");
 
                 JSONArray newArray = arr.getJSONObject(i).getJSONArray("locations");
+                numberOfErrors = newArray.length();
 
-                for (int k = 0; k < newArray.length(); k++) {
+                output = "<html>";
+
+                if (typeOfError.equals("WARNING")) {
+                    output += String.valueOf(++numberOfErrorsWarnings) + ".";
+                } else if (typeOfError.equals("INFO")) {
+                    output += String.valueOf(++numberOfErrorsInfo) + ".";
+                } else if (typeOfError.equals("ERROR")) {
+                    output += String.valueOf(++numberOfErrorsErors) + ".";
+                }
+
+                for (int k = 0; k < numberOfErrors; k++) {
                     expression = newArray.getJSONObject(k).getString("expression");
                     line = newArray.getJSONObject(k).getInt("line");
                     column = newArray.getJSONObject(k).getInt("column");
-                    message =  newArray.getJSONObject(k).getString("message");
-
-                   System.out.println(typeOfError);
-                    multimap.put(line, message);
-                    System.out.println(line);
-                    //Highlighter.highlightErrors(line, output);
-                    //errorMessages.put(line, output);
+                    output += "<b>" + newArray.getJSONObject(k).getString("message") + "</b> <br />";
+                    output += "<span id='expression'>" + expression + "</span>";
+                    output += " line and column : ";
+                    output += " " + line + ":" + column;
+                    output += "</html>";
+                    if (typeOfError.equals("WARNING")) {
+                        listModel.addElement(output);
+                        ++numberOfErrorsWarnings;
+                    } else if (typeOfError.equals("INFO")) {
+                        listModelInfo.addElement(output);
+                        ++numberOfErrorsErors;
+                    } else if (typeOfError.equals("ERROR")) {
+                        listModelInfo.addElement(output);
+                        ++numberOfErrorsInfo;
+                    }
+                    listModelAll.addElement(output);
+                    Highlighter.highlightErrors(line, output);
+                    errorMessages.put(line, output);
                 }
             }
 
 
-//
-//            listResultsInfo.setModel(listModelInfo);
-//            listResultsError.setModel(listModelError);
-//            listResults.setModel(listModel);
-//            listResultsAll.setModel(listModelAll);
-//
-//            listResults.addMouseListener(new ListResultsMouseClickListener(listResults));
-//            listResultsInfo.addMouseListener(new ListResultsMouseClickListener(listResultsInfo));
-//            listResultsError.addMouseListener(new ListResultsMouseClickListener(listResultsError));
-//            listResultsAll.addMouseListener(new ListResultsMouseClickListener(listResultsAll));
-//
-//            tabbedPane1.setTitleAt(0, "All (" + i + ")");
-//            tabbedPane1.setTitleAt(1, "Warnings (" + String.valueOf(listResults.getModel().getSize()) + ")");
-//            tabbedPane1.setTitleAt(2, "Info (" + String.valueOf(listResultsInfo.getModel().getSize()) + ")");
-//            tabbedPane1.setTitleAt(3, "Error (" + String.valueOf(listResultsError.getModel().getSize()) + ")");
+            listResultsInfo.setModel(listModelInfo);
+            listResultsError.setModel(listModelError);
+            listResults.setModel(listModel);
+            listResultsAll.setModel(listModelAll);
+
+            listResults.addMouseListener(new ListResultsMouseClickListener(listResults));
+            listResultsInfo.addMouseListener(new ListResultsMouseClickListener(listResultsInfo));
+            listResultsError.addMouseListener(new ListResultsMouseClickListener(listResultsError));
+            listResultsAll.addMouseListener(new ListResultsMouseClickListener(listResultsAll));
+
+            tabbedPane1.setTitleAt(0, "All (" + i + ")");
+            tabbedPane1.setTitleAt(1, "Warnings (" + String.valueOf(listResults.getModel().getSize()) + ")");
+            tabbedPane1.setTitleAt(2, "Info (" + String.valueOf(listResultsInfo.getModel().getSize()) + ")");
+            tabbedPane1.setTitleAt(3, "Error (" + String.valueOf(listResultsError.getModel().getSize()) + ")");
 
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -185,16 +209,6 @@ public class LintAnalyzer implements ToolWindowFactory {
         file = FileDocumentManager.getInstance().getFile(document);
     }
 
-    private void setEditorMouseClickListener(){
-        try {
-            editor.removeEditorMouseListener(editorMouseClickListener);
-        }catch(Exception e){
-            //Implement logger here
-        }
-        editorMouseClickListener = new EditorMouseClickListener();
-        editor.addEditorMouseListener( editorMouseClickListener );
-    }
-
     public static VirtualFile getFile(){
         return file;
     }
@@ -204,7 +218,3 @@ public class LintAnalyzer implements ToolWindowFactory {
     }
 
 }
-
-
-
-
