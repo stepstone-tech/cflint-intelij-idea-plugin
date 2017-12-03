@@ -1,0 +1,13 @@
+///**
+//* @gatekeeperArg.inject     id:GateKeeper
+//**/
+
+//public IjmSubscription function init(
+//        required GateKeeper gateKeeperArg
+//){
+//    variables.gateKeeper = arguments.gateKeeperArg;
+//}
+
+//public boolean function isInstantJobMatchEnabled(){
+//    return variables.gatekeeper.getKey('MODULE.FUNCTIONALITY.ENABLED');
+//}

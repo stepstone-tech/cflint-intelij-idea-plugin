@@ -1,0 +1,41 @@
+/**
+ * unit test for
+ */
+component asyncAll = "true" {
+
+	/**
+	 * method prepares tested object
+	 * @returns instance of 
+	 */
+	private any function getTestedObject() {
+		return $mockbox.createMock("");
+	}
+
+	/**
+	 * method mocks all components injected by wirebox (using property..inject or function..provider) and
+	 * injects them back to tested object
+	 * @testedObject instance of currently tested object
+	 * @returns struct with all mocked dependencies
+	 */
+	private struct function getMocks(required any testedObject) {
+
+		var mocks = {};
+
+		// mocking wirebox:
+		mocks.wirebox = $mockbox.createStub();
+		arguments.testedObject.$property('wirebox', 'variables', mocks.wirebox);
+
+		return mocks;
+	}
+
+
+	/**
+	 * unit test for public method get
+	 */
+	function get() test = "true" {
+		// create tested object and mock dependencies:
+		var testedObject = getTestedObject();
+		var mocks = getMocks(testedObject);
+
+	}
+}

@@ -1,0 +1,6 @@
+var collection = {};
+
+for (var key in collection) {
+	writeOutput(key);
+	writeOutput(collection[key]);
+}

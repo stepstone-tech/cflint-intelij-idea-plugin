@@ -1,0 +1,25 @@
+if (structKeyExists(rc, 'uxTools')) {
+	try {
+		rc.UxTools.drawTest('TestName', 'V5');
+
+		switch(rc.uxTools.ifInTest('TestName')) {
+			case 'B' : componentName.methodName(); break;
+		}
+
+	} catch (any e) {
+
+	}
+}
+
+var testVariant = '';
+
+if (structKeyExists(arguments.rc, 'uxTools')) {
+	try {
+		testVariant = arguments.rc.uxTools.ifInTest('NOTI-480');
+	} catch(any e) {
+		log.error(
+			"Error while trying to check if in test NOTI-480 : " & e.message,
+			e.tagContext
+		);
+	}
+}

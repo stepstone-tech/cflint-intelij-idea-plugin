@@ -1,0 +1,14 @@
+property name ="config";
+
+/**
+* @configArg.inject             coldbox:setting:configProvider@{moduleName}
+*/
+
+public {ComponentName} function init(
+        controller,
+        required component configArg,
+        )
+{
+    super.init(arguments.controller);
+    variables.config = arguments.configArg;
+}

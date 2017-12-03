@@ -1,0 +1,10 @@
+try {
+
+	throw(message='', detail='');
+
+} catch (any e) {
+
+	rethrow;
+} finally {
+
+}

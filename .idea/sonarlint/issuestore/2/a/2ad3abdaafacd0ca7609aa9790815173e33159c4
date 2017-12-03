@@ -1,0 +1,41 @@
+
+0squid:S1643"Use a StringBuilder instead.(ğğÚ
+6squid:S1643"Use a StringBuilder instead.(Ëæ¿½üÿÿÿÿ
+1squid:S1643"Use a StringBuilder instead.(·õæÖ
+6squid:S1643"Use a StringBuilder instead.(şÆóÄøÿÿÿÿ
+1squid:S1643"Use a StringBuilder instead.(Ñââñ
+1squid:S1643"Use a StringBuilder instead.(çİ¢®
+6squid:S1643"Use a StringBuilder instead.(Ò´ø²ùÿÿÿÿ
+6squid:S1643"Use a StringBuilder instead.(¼ÚöÏüÿÿÿÿ
+6squid:S1643"Use a StringBuilder instead.(¯Ş¨×ûÿÿÿÿ
+Fsquid:S3398",Move this method into "ListResultsListener".(Åó¦‚şÿÿÿÿ
+Msquid:S1068"3Remove this unused "panelResultsAll" private field.(®Âõ’üÿÿÿÿ
+Bsquid:S1068"-Remove this unused "tempLabel" private field.(ã‘•Š
+Esquid:S1068"0Remove this unused "myToolWindow" private field.(«ç–¿
+Asquid:S1068",Remove this unused "watchKey" private field.(Ğİ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(êÖÎš
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Åíì‚úÿÿÿÿ
+psquid:S1450"[Remove the "myToolWindow" field and declare it as a local variable in the relevant methods.(«ç–¿
+wsquid:S1450"]Remove the "numberOfErrors" field and declare it as a local variable in the relevant methods.(¨¢ßşÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¦¨Œ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¼¢Ü€
+Jsquid:S1481"5Remove this unused "numberOfErrosAll" local variable.(‚ŠÌİ
+Dsquid:S00108")Either remove or fill this block of code.(±Ÿ—±ÿÿÿÿÿ
+?squid:S00108")Either remove or fill this block of code.(”ı¾
+Bsquid:S1604"(Make this anonymous inner class a lambda(–ë÷áıÿÿÿÿ
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(®î’×üÿÿÿÿ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ãÆĞÂ
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ö„˜şúÿÿÿÿ
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(•ßçùÿÿÿÿ
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Èäûÿÿÿÿ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ş°–‘
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(­¹—…
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹ÿÖ‰ıÿÿÿÿ
+Tsquid:UselessImportCheck"-Remove this unused import 'java.util.Vector'.(ÿŒ¸Áÿÿÿÿÿ
+Qsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+ssquid:UselessImportCheck"QRemove this unused import 'com.intellij.openapi.components.ApplicationComponent'.(‡„ÿ
+gsquid:UselessImportCheck"@Remove this unused import 'javax.swing.table.DefaultTableModel'.(è†åûÿÿÿÿ
+rsquid:UselessImportCheck"PRemove this unused import 'com.intellij.openapi.application.ApplicationManager'.(Õ·Àœ
+Qsquid:UselessImportCheck"/Remove this unused import 'java.util.Iterator'.(¥ÍòÕ
+asquid:UselessImportCheck":Remove this unused import 'com.intellij.ui.table.JBTable'.(ùÔÌ‚ıÿÿÿÿ
+isquid:UselessImportCheck"BRemove this unused import 'com.intellij.util.messages.MessageBus'.(¦°Û­ıÿÿÿÿ

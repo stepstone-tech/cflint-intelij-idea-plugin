@@ -1,0 +1,74 @@
+<idea-plugin version="2">
+  <id>com.coldfusion.lint</id>
+  <name>Coldfusion cflint plugin</name>
+  <version>1.10</version>
+  <vendor email="jedram01@stepstone.com" url="https://www.stepstone.de">Stepstone</vendor>
+
+  <description><![CDATA[
+      Code analyser and generator based on CFLint.
+    ]]></description>
+
+  <change-notes><![CDATA[
+
+    ]]>
+  </change-notes>
+
+  <idea-version since-build="131"/>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="CF plugin" secondary="false"  anchor="bottom" factoryClass="com.coldfusion.lint.LintAnalyzer"/>
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <action id="generateCode" class="com.coldfusion.lint.actions.AnalyzeCode" text="Analyze coldfusion code">
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl s"/>
+    </action>
+    <group id="outer" text="Sample" description="Sample desc">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="generateCode"/>
+      <group id="inner" text="CF code generator" popup="true">
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="hints" text="Hint for method or component"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="constructor" text="constructor"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="function" text="function"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="forloop" text="for loop"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="forinloopstruct" text="for in loop (struct, array)"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="forinloopquery" text="for in loop (query)"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="whileloop" text="while loop"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="switchcase" text="switch case"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="ifelseifelse" text="if else if else"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="trycatch" text="Try / Catch / Throw / Finally / Rethrow"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="javacast" text="JavaCast()"/>
+        <separator/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="elasticlogger" text="Elastic logger"/>
+        <separator/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="gatekeeper" text="Gatekeeper"/>
+      </group>
+    </group>
+    <group id="outerUXTools" text="uxTools" description="Sample desc">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="outer"/>
+      <group id="innerUXTools" text="UXTools" popup="true">
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="uxtooldrawtest" text="UX draw test"/>
+      </group>
+    </group>
+    <group id="outerUnitTests" text="Unit tests" description="Sample desc">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="outerUXTools"/>
+      <group id="innerUnitTests" text="Create unit test file" popup="true">
+        <action class="com.coldfusion.lint.actions.CreateFile" id="createunittestfile" text="Create unit test file"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="unittest" text="Unit test template"/>
+      </group>
+    </group>
+    <group id="outerSQL" text="uxTools" description="UX Tools">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="outer"/>
+        <action class="com.coldfusion.lint.actions.GenerateCF" id="query" text="SQL"/>
+    </group>
+  </actions>
+
+</idea-plugin>

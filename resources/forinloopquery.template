@@ -1,0 +1,15 @@
+var cars = QueryNew(
+    'id,make,model',
+	'cf_sql_integer, cf_sql_varchar, cf_sql_varchar',
+
+	[
+        ['1', 'Ford', 'T'],
+        ['2', 'Dodge','30']
+	]
+);
+
+for (var car in cars) {
+    writeOutput("Id    " & car.id);
+	writeOutput("Make  " & car.make);
+	writeOutput("Model " & car.model);
+}

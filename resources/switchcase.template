@@ -1,0 +1,7 @@
+var switchValue = '';
+
+switch(switchValue) {
+    case "":
+         break;
+    default:
+}

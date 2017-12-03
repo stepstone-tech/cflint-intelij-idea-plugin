@@ -1,0 +1,13 @@
+private boolean function insertUserId(required struct insertData){
+    try{
+        var sql = "INSERT INTO [Stepstone_data].[dbo].[tablename] ([userID]) values (:userId)";
+        var sqlQuery = new Query();
+        sqlQuery.setSql( sql );
+        sqlQuery.setDataSource( config.get('dsn') );
+        sqlQuery.addParam( name = "userId", value = arguments.insertData.userId, cfsqltype="cf_sql_integer" );
+        sqlQuery.execute();
+    } catch(any e){
+        return false;
+    }
+    return true;
+}

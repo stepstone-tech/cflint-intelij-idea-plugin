@@ -1,0 +1,21 @@
+
+//component {
+//  property name="elastic";
+//
+//  /**
+//  * @elasticArg.inject                coldbox:myPlugin:elastic@logger
+//  **/
+//
+//  public any function init(required component elasticArg){
+//      variables.elastic = arguments.elasticArg;
+//  }
+//
+//  /*
+//  * Method log
+//  * @message required
+//  */
+//
+//  private void function log(required string message){
+//      variables.elastic.logError({ message = arguments.message }, elastic.ERROR);
+//  }
+//}

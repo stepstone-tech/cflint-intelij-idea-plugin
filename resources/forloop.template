@@ -1,0 +1,6 @@
+var collection = [];
+var collectionLen = ArrayLen(collection);
+
+for (var i=1; i <= collectionLen ; i++) {
+	writeOutput(collection[i]);
+}
