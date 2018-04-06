@@ -15,7 +15,7 @@ public class Parser {
     }
 
     public static String generateHint(String expression) {
-        StringBuilder comment = new StringBuilder("/*\n");
+        StringBuilder comment = new StringBuilder("/**\n");
 
 
         String[] content = expression.split("\\(");
@@ -23,7 +23,8 @@ public class Parser {
         String functionArgs = content[1];
         String argRequired = "";
         String argType = "";
-        String argName;
+        String argName = "";
+        String argValue = "";
 
         String[] argsInFunction = functionArgs.split(",");
 
@@ -35,24 +36,30 @@ public class Parser {
             argsInFunctionStr = argsInFunctionStr.replace(")", "");
             argsInFunctionStr = argsInFunctionStr.trim().replaceAll("\\s+", " ");
 
+            if (anArgsInFunction.contains(anArgsInFunction)) {
+                argRequired = "required";
+                argsInFunctionStr.replaceAll(argRequired + "\\s?\\s+", "");
+            }
+
             argsElements = argsInFunctionStr.split(" ");
 
-            if (argsElements.length == 2) {
+            argName = argsElements[0];
+
+            if (argsElements.length > 1) {
                 argName = argsElements[1];
-                argRequired = argsElements[0];
-            } else if (argsElements.length == 1) {
-                argName = argsElements[0];
-            } else {
-                argName = argsElements[0];
+                argType = argsElements[0];
             }
-            if (argName.length() > 0 || argType.length() > 0 || argRequired.length() > 0) {
-                comment.append("* @").append(argName).append(" ").append(argRequired).append("\n");
+
+            if (argName.length() > 0) {
+                comment.append("* @")
+                        .append(argName)
+                        .append(" ").append(argType)
+                        .append(" ").append(argValue)
+                        .append(" ").append(argRequired)
+                        .append("\n");
             }
         }
-
         comment.append("*/\n");
-
-
         return comment.toString();
     }
 
@@ -86,7 +93,7 @@ public class Parser {
     }
 
     private String generateComponentHint() {
-        String comment = "/*\n";
+        String comment = "/**\n";
         String componentName;
         componentName = file.getName();
         componentName = componentName.replace(".cfm", "");
