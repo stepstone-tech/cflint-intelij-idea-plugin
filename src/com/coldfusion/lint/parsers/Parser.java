@@ -1,6 +1,7 @@
 package com.coldfusion.lint.parsers;
 
 import com.coldfusion.lint.LintAnalyzer;
+import com.coldfusion.lint.model.EditorContent;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import java.util.regex.Matcher;
@@ -15,11 +16,12 @@ public class Parser {
     }
 
     public static String generateHint(String expression) {
+
         StringBuilder comment = new StringBuilder("/**\n");
 
 
         String[] content = expression.split("\\(");
-        String functionName = content[0].replace("function", "Method ");
+        String functionName = content[0].replace("function", "Method ").trim();
         String functionArgs = content[1];
         String argRequired = "";
         String argType = "";
@@ -28,13 +30,16 @@ public class Parser {
 
         String[] argsInFunction = functionArgs.split(",");
 
-        comment.append("* ").append(functionName).append("\n");
+        comment.append("* ").append(functionName.split("Method")[1]).append("\n");
+
         String[] argsElements;
+
         for (String anArgsInFunction : argsInFunction) {
             String argsInFunctionStr = anArgsInFunction;
             argsInFunctionStr = argsInFunctionStr.replace("{", "");
             argsInFunctionStr = argsInFunctionStr.replace(")", "");
             argsInFunctionStr = argsInFunctionStr.trim().replaceAll("\\s+", " ");
+            argRequired = "";
 
             if (anArgsInFunction.contains(anArgsInFunction)) {
                 argRequired = "required";
@@ -44,11 +49,6 @@ public class Parser {
             argsElements = argsInFunctionStr.split(" ");
 
             argName = argsElements[0];
-
-            if (argsElements.length > 1) {
-                argName = argsElements[1];
-                argType = argsElements[0];
-            }
 
             if (argName.length() > 0) {
                 comment.append("* @")
@@ -80,7 +80,9 @@ public class Parser {
         String componentMissingHint = findPhrase(expression, ".*Component.*is missing a hint.*");
 
         if (missingHint.length() > 0) {
-            expMsg = findPhrase(missingHint, "function.*(.*)");
+            missingHint = EditorContent.selectedFromLineToEnd(Integer.parseInt(parseLineAndColumn(expression)[0]));
+            expMsg = findPhrase(missingHint, "(public|private|protected)?[\\w\\s]+function+[\\w\\s]+\\([\\w\\s\\n\\,]+\\)");
+            System.out.println(expMsg);
             if (expMsg.length() > 0) {
                 msg = generateHint(expMsg);
             }
